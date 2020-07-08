@@ -41,7 +41,11 @@ export const GenerateButton = ({ record, resource}) => {
                 var data = response.data;
                 var url = eval('`'+context.url+'`');
                 var body = eval('`'+context.bodytemplate+'`');
-                var headers = JSON.parse(eval('`'+context.headers+'`'));
+                var headers = new Headers(JSON.parse(eval('`'+context.headers+'`')));
+
+                if (context.basicauthusername != "") {
+                    headers.set("Authorization", "Basic " + btoa(context.basicauthusername + ":" + context.basicauthpassword));
+                }
 
                 fetch(url, {method: context.verb, mode: context.mode, headers: headers, body: body})
                     .then(response => {

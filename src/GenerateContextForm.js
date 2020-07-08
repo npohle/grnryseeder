@@ -24,15 +24,18 @@ export const GenerateContextForm = ({
         context.setVerb(values.verb);
         context.setMode(values.mode);
         context.setUrl(values.url);
+        context.setBasicAuthUsername(values.basicauthusername);
+        context.setBasicAuthPassword(values.basicauthpassword);
         context.setDelaymin(values.delaymin);
         context.setDelaymax(values.delaymax);
         context.setBodytemplate(values.bodytemplate);
+        context.setHeaders(values.headers);
       }
     };
     
   return (
       <div style={{"width": "80%", "marginBottom": "7px"}}>
-        <Form onSubmit={onSubmit} initialValues={{"delay":"0", "verb": context.verb, "mode": context.mode, "headers": context.headers, "url": context.url, "delaymin": context.delaymin, "delaymax": context.delaymax, "bodytemplate": context.bodytemplate}} style={{"paddingTop": "24px", "marginTop": "0px"}}>
+        <Form onSubmit={onSubmit} initialValues={{"delay":"0", "verb": context.verb, "mode": context.mode, "headers": context.headers, "url": context.url, "delaymin": context.delaymin, "delaymax": context.delaymax, "bodytemplate": context.bodytemplate, "basicauthusername": context.basicauthusername, "basicauthpassword": context.basicauthpassword}} style={{"paddingTop": "24px", "marginTop": "0px"}}>
           {({ handleSubmit }) => (
             <form onSubmit={handleSubmit} style={{"paddingTop": "24px", "marginTop": "0px"}}>
 
@@ -59,6 +62,18 @@ export const GenerateContextForm = ({
                       <Box display="flex" flexDirection="row" alignItems="flex-start" width={"100%"}>
                             <TextInput resettable={false} helperText={false} source="url" label="HTTP URL" fullWidth={true} />
                       </Box>
+
+                      <Box display="flex" flexDirection="row" justifyContent="space-between" width={"100%"}>
+                        
+                        <Box component="span" flexGrow="1" mr={1}>
+                            <TextInput resettable={false} helperText={false} source="basicauthusername" label="Basic Auth Username" fullWidth={true} />
+                          </Box>
+                          <Box component="span" flexGrow="1" ml={1}>
+                            <TextInput resettable={false} helperText={false} source="basicauthpassword" label="Basic Auth Password" fullWidth={true} />
+                          </Box>
+
+                        </Box>
+                      
 
                       <Box display="flex" flexDirection="row" justifyContent="space-between" width={"100%"}>
                         
