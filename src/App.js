@@ -1,25 +1,28 @@
 import React from 'react';
-import logo from './logo.svg';
-import './App.css';
+import { Admin, Resource } from 'react-admin';
+import { UserList } from './users';
+import memoryDataProvider from './memoryDataProvider'
+import { APIContext } from "./APIContext";
 
-function App() {
+const dataProvider = new memoryDataProvider({"users" : []});
+
+const App = () => {
+
+  var genparam = {url: "https://demo.grnry.io/com.snowplowanalytics.snowplow/tp2", verb: "POST", mode: "non-cors", delaymin: "250", delaymax: "2500", bodytemplate: "{\n\"name\": \"${data.name}\",\n\"username\": \"${data.username}\",\n\"email\": \"${data.email}\"\n}", headers: "{\"Content-Type\": \"application/json\"}"}
+  genparam.setUrl = (newurl) => {genparam.url = newurl;}
+  genparam.setVerb = (verb) => {genparam.verb = verb;}
+  genparam.setMode = (mode) => {genparam.mode = mode;}
+  genparam.setHeaders = (headers) => {genparam.headers = headers;} 
+  genparam.setDelaymin = (delaymin) => {genparam.delaymin = delaymin;}
+  genparam.setDelaymax = (delaymax) => {genparam.delaymax = delaymax;}
+  genparam.setBodytemplate = (bodytemplate) => {genparam.bodytemplate = bodytemplate;}
+
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
+    <APIContext.Provider value={genparam}>
+      <Admin dataProvider={dataProvider}>
+        <Resource name="users" list={UserList} />
+      </Admin>
+    </APIContext.Provider>
   );
 }
 
